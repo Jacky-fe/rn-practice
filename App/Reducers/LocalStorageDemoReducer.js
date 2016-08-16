@@ -3,7 +3,6 @@ import Immutable from 'seamless-immutable'
 import { createReducer } from 'reduxsauce'
 
 export const INITIAL_STATE = Immutable({
-  value: null,
   attempting: false
 })
 
@@ -13,7 +12,7 @@ const attemptSave = (state, action) =>
 
 // successful save
 const saveSuccess = (state, action) =>
-  state.merge({ attempting: false, errorCode: null, key: action.key })
+  state.merge({ attempting: false, errorCode: null, key: action.key, value: action.value })
 
 // save failure
 const saveFailure = (state, action) =>
@@ -25,7 +24,7 @@ const attemptLoad = (state, action) =>
 
 // successful load
 const loadSuccess = (state, action) =>
-  state.merge({ attempting: false, errorCode: null, key: action.key, value, action.value })
+  state.merge({ attempting: false, errorCode: null, key: action.key, value: action.value })
 
 // load failure
 const loadFailure = (state, action) =>

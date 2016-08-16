@@ -15,6 +15,7 @@ import MapviewExample from '../Containers/MapviewExample'
 import APITestingScreen from '../Containers/APITestingScreen'
 import ThemeScreen from '../Containers/ThemeScreen'
 import DeviceInfoScreen from '../Containers/DeviceInfoScreen'
+import LocalStorageDemo from '../Containers/LocalStorageDemo'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -36,6 +37,7 @@ class NavigationRouter extends Component {
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />
             <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
+            <Scene key='localStorageDemo' component={LocalStorageDemo} title='Local Storage Demo' />
           </Scene>
         </Scene>
       </Router>

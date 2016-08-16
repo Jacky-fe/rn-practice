@@ -6,8 +6,9 @@
 //  Copyright © 2016年 Facebook. All rights reserved.
 //
 
-#ifndef MyButton_h
-#define MyButton_h
 
 
-#endif /* MyButton_h */
+@interface MyButtonManager : RCTViewManager<MyButtonDelegate>
+
+
+@end

@@ -6,8 +6,35 @@
 //  Copyright © 2016年 Facebook. All rights reserved.
 //
 
-#ifndef MyButtonControl_h
-#define MyButtonControl_h
+#import <UIKit/UIKit.h>
+
+#import "RCTComponent.h"
+#import "UIView+React.h"
+
+@class MyButton, RCTEventDispatcher;
+
+@protocol MyButtonDelegate <NSObject>
+
+@optional
+
+- (void)myButtonClicked:(MyButton * _Nonnull)button;
+
+@end
 
 
-#endif /* MyButtonControl_h */
+
+@interface MyButton : UIView
+{
+  id<MyButtonDelegate> deleage;
+}
+
+@property (nonatomic, copy) RCTBubblingEventBlock onPress;
+
+@property(nullable,nonatomic,weak) id<MyButtonDelegate> delegate;
+
+
+@end
+
+
+
+

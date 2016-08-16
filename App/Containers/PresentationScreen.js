@@ -15,7 +15,8 @@ class PresentationScreen extends React.Component {
     usageExamples: PropTypes.func,
     apiTesting: PropTypes.func,
     theme: PropTypes.func,
-    deviceInfo: PropTypes.func
+    deviceInfo: PropTypes.func,
+    localStorageDemo: PropTypes.func
   }
 
   render () {
@@ -54,6 +55,9 @@ class PresentationScreen extends React.Component {
             Device Info Screen
           </RoundedButton>
 
+          <RoundedButton onPress={this.props.localStorageDemo} >
+            Local Storage Demo
+          </RoundedButton>
           <View style={styles.centered}>
             <Text style={styles.subtitle}>Made with ❤️ by Infinite Red</Text>
           </View>
@@ -75,7 +79,8 @@ const mapDispatchToProps = (dispatch) => {
     usageExamples: NavigationActions.usageExamples,
     apiTesting: NavigationActions.apiTesting,
     theme: NavigationActions.theme,
-    deviceInfo: NavigationActions.deviceInfo
+    deviceInfo: NavigationActions.deviceInfo,
+    localStorageDemo: NavigationActions.localStorageDemo
   }
 }
 

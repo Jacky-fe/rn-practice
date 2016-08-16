@@ -9,9 +9,9 @@ export function* attemptSave(key, value) {
     yield put(Actions.saveFailure('WRONG'))
   } else {
     try {
-      LocalStorage.save(key, value)
+      localStorage.save(key, value)
       // dispatch successful
-      yield put(Actions.saveSuccess(key))
+      yield put(Actions.saveSuccess(key, value))
     } catch (e) {
       yield put(Actions.saveFailure(e.message))
     }
@@ -31,23 +31,22 @@ export function* watchSaveAttempt() {
 
 // attempts to load
 export function* attemptLoad(key) {
-  if (!key ) {
-    // dispatch failure
+  if (!key) {
     yield put(Actions.loadFailure('WRONG'))
   } else {
-    try {
-      const response = yield call(localStorage.load, key)
-      // dispatch successful
-      yield put(Actions.loadSuccess(key, value))
-    } catch (e) {
-      yield put(Actions.loadFailure(e.message))
-    }
+      try {
+        const value = yield call(localStorage.load, key)
+        yield put(Actions.loadSuccess(key, value))
+      } catch (e) {
+        yield put(Actions.loadFailure(e.message))
+      }
   }
 }
 
 export function* watchLoadAttempt() {
   while (true) {
     const { key } = yield take(Types.LOCALSTORAGE_LOAD_ATTEMPT)
+
     yield call(attemptLoad, key)
   }
 }

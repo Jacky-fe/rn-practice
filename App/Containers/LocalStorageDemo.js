@@ -8,51 +8,53 @@ import {
   Image,
   Keyboard,
   LayoutAnimation,
-  Alert
+  Alert,
+  requireNativeComponent,
+  StyleSheet
 } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/LoginScreenStyle'
+import Styles from './Styles/LocalStorageDemoStyle'
 import Actions from '../Actions/LocalStorageDemoActions'
 import {Images, Metrics} from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
+import Video from 'react-native-video'
 // I18n
 import I18n from '../I18n/I18n.js'
+const iface = {
+  name: 'MyButton',
+  propTypes: {
+    text: PropTypes.string,
+    onPress: PropTypes.func,
+    clickable: PropTypes.bool,
+    ...View.propTypes // 包含默认的View的属性
+  },
+};
 
-class LoginScreen extends React.Component {
+const MyButton = requireNativeComponent('MyButton', iface);
+class LocalStorageDemo extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      key: 'testkey',
-      value: '',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth }
     }
-    this.isAttempting = false
   }
 
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
-    // Did the login attempt complete?
-    if (this.isAttempting && !newProps.attempting) {
-      this.props.close()
-    }
+   
   }
 
   handlePressSave = () => {
     const { key, value } = this.state
-    this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
+    const localStorage = require('react-native').NativeModules.LocalStorage
     this.props.attemptSave(key, value)
   }
 
-  handlePressLoad = () => {
-    const { key, value } = this.state
-    this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
-    const value = this.props.attemptLoad(key)
-    this.setState({value: value})
+  handlePressLoad = async () => {
+    const { key } = this.state
+    this.props.attemptLoad(key)
   }
 
   handleChangeKey = (text) => {
@@ -63,9 +65,15 @@ class LoginScreen extends React.Component {
     this.setState({ value: text })
   }
 
+  handlePressDemoButton = () => {
+    alert('123')
+  }
+
   render () {
-    const { username, password } = this.state
-    const { attempting } = this.props
+    debugger;
+    let { myKey, value, attempting } = {...this.props}
+    const key = myKey
+
     const editable = !attempting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
@@ -94,10 +102,8 @@ class LoginScreen extends React.Component {
               editable={editable}
               keyboardType='default'
               returnKeyType='go'
-              secureTextEntry
               onChangeText={this.handleChangeValue}
               underlineColorAndroid='transparent'
-              onSubmitEditing={this.handlePressLogin}
               placeholder='请输入value' />
           </View>
 
@@ -107,40 +113,57 @@ class LoginScreen extends React.Component {
                 <Text style={Styles.loginText}>Save</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.props.handlePressLoad}>
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLoad}>
               <View style={Styles.loginButton}>
                 <Text style={Styles.loginText}>Load</Text>
+                
               </View>
             </TouchableOpacity>
           </View>
+<MyButton text='My Button' _onPress={this.handlePressDemoButton} style={buttonStyles.myButton} onPress={this.handlePressDemoButton}></MyButton>
+ 
         </View>
-
+          
+       
       </ScrollView>
     )
   }
 
 }
 
-LoginScreen.propTypes = {
+LocalStorageDemo.propTypes = {
   dispatch: PropTypes.func,
   attempting: PropTypes.bool,
-  close: PropTypes.func,
   attemptSave: PropTypes.func,
-  attemptLoad: PropTypes.func
+  attemptLoad: PropTypes.func,
+  myKey: PropTypes.string,
+  value: PropTypes.string
 }
 
 const mapStateToProps = (state) => {
-  return {
-    attempting: state.login.attempting
+  const ret = {
+    attempting: state.localStorage.attempting,
+    myKey: state.localStorage.key,
+    value: state.localStorage.value
   }
+  return ret
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    close: NavigationActions.pop,
     attemptSave: (key, value) => dispatch(Actions.attemptSave(key, value)),
     attemptLoad: (key) => dispatch(Actions.attemptLoad(key))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+// Later on in your styles..
+const buttonStyles = StyleSheet.create({
+  myButton: {
+    // top: 100,
+    flex: 1,
+    width: 200,
+    height: 50
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LocalStorageDemo)
