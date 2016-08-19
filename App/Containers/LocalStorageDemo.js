@@ -37,11 +37,19 @@ class LocalStorageDemo extends React.Component {
     super(props)
     this.state = {
       visibleHeight: Metrics.screenHeight,
-      topLogo: { width: Metrics.screenWidth }
+      topLogo: { width: Metrics.screenWidth },
+      key: '',
+      value: '',
+      attempting: false
     }
   }
 
   componentWillReceiveProps (newProps) {
+    this.setState({
+      key: newProps.myKey,
+      value: newProps.value,
+      attempting: newProps.attempting
+    });
     this.forceUpdate()
    
   }
@@ -70,9 +78,7 @@ class LocalStorageDemo extends React.Component {
   }
 
   render () {
-    debugger;
-    let { myKey, value, attempting } = {...this.props}
-    const key = myKey
+    let { key, value, attempting } = {...this.state}
 
     const editable = !attempting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly

@@ -4,7 +4,7 @@ import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
+import NavItems from '../Navigation/NavItems'
 // Styles
 import styles from './Styles/PresentationScreenStyle'
 
@@ -24,11 +24,14 @@ class PresentationScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
+        {NavItems.hamburgerButton()}
+        
           <View style={styles.centered}>
             <Image source={Images.clearLogo} style={styles.logo} />
           </View>
 
           <View style={styles.section} >
+          
             <Text style={styles.sectionText} >
               Default screens for development, debugging, and alpha testing
               are available below.

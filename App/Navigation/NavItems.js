@@ -8,7 +8,7 @@ import { Colors, Metrics } from '../Themes'
 const toggleDrawer = () => {
   NavigationActions.refresh({
     key: 'drawer',
-    open: value => !value
+    open: true
   })
 }
 

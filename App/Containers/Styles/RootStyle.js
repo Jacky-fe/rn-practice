@@ -3,7 +3,7 @@ import {Fonts, Metrics, Colors} from '../../Themes/'
 
 const RootStyle = StyleSheet.create({
   applicationView: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
