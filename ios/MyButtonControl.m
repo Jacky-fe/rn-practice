@@ -22,6 +22,7 @@
 - (instancetype)init
 {
   
+  
   if(self=[super init])
   {
     _button = [[UIButton alloc] init];

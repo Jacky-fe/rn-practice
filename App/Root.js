@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, AppState } from 'react-native'
 import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
 import DebugSettings from './Config/DebugSettings'
@@ -8,13 +8,17 @@ import NavigationRouter from './Navigation/NavigationRouter'
 
 // Styles
 import styles from './Containers/Styles/RootStyle'
-
 export default class Root extends React.Component {
   static propTypes = {
     store: PropTypes.object.isRequired
   }
 
+  handleAppStateChange(currentAppState) {
+    console.log(currentAppState)
+  }
+
   componentWillMount () {
+    AppState.addEventListener('change', this.handleAppStateChange);
     const { dispatch } = this.props.store
     dispatch(Actions.startup())
   }

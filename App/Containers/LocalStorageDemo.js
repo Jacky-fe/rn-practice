@@ -17,7 +17,6 @@ import Styles from './Styles/LocalStorageDemoStyle'
 import Actions from '../Actions/LocalStorageDemoActions'
 import {Images, Metrics} from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import Video from 'react-native-video'
 // I18n
 import I18n from '../I18n/I18n.js'
 const iface = {
@@ -157,8 +156,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptSave: (key, value) => dispatch(Actions.attemptSave(key, value)),
-    attemptLoad: (key) => dispatch(Actions.attemptLoad(key))
+    attemptSave: (key, value) => dispatch(Actions.saveLocal(key, value)),
+    attemptLoad: (key) => dispatch(Actions.loadLocal(key))
   }
 }
 

@@ -19,6 +19,6 @@ export default function * root () {
   yield fork(watchStartup)
   yield fork(watchLoginAttempt)
   yield fork(getCityWeather(api).watcher)
-  yield fork(watchSaveAttempt)
-  yield fork(watchLoadAttempt)
+   yield fork(watchSaveAttempt)
+   yield fork(watchLoadAttempt)
 }
